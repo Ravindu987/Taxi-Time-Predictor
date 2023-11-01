@@ -97,16 +97,16 @@ def process_data(config: DictConfig):
     data = drop_columns(data, config.data.drop_columns)
     data = remove_zero_distance(data)
     data = remove_outliers(data)
-    data = scale(data, config.data.scale)
+    data = scale(data, config.data.scale_columns)
 
     train_x, test_x, train_y, test_y = train_test_split(
         data, test_size=0.2, random_state=42
     )
 
-    train_x.to_csv(config.data.train_x, index=False)
-    test_x.to_csv(config.data.test_x, index=False)
-    train_y.to_csv(config.data.train_y, index=False)
-    test_y.to_csv(config.data.test_y, index=False)
+    train_x.to_csv(config.processed.train_x, index=False)
+    test_x.to_csv(config.processed.test_x, index=False)
+    train_y.to_csv(config.processed.train_y, index=False)
+    test_y.to_csv(config.processed.test_y, index=False)
 
 
 if __name__ == "__main__":

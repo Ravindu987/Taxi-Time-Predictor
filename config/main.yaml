@@ -1,0 +1,30 @@
+data:
+  path: Data/train.csv
+
+features:
+  onehot_categorical:
+    - store_and_fwd_flag
+  drop_columns:
+    - id
+    - pickup_datetime
+    - dropoff_datetime
+  scale_columns:
+    - distance_latitude
+    - distance_longitude
+    - distance
+
+
+processed:
+  dir: data/processed
+  train_x: 
+    name: train_x.csv
+    path: ${processed.dir}/${processed.train_x.name}
+  test_x:
+    name: test_x.csv
+    path: ${processed.dir}/${processed.test_x.name}
+  train_y: 
+    name: train_y.csv
+    path: ${processed.dir}/${processed.train_y.name}
+  test_y:
+    name: test_y.csv
+    path: ${processed.dir}/${processed.test_y.name}  
