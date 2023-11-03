@@ -2,6 +2,7 @@ import pandas as pd
 import hydra
 import numpy as np
 import xgboost as xgb
+import joblib
 
 from omegaconf import DictConfig
 from hyperopt import hp, fmin, tpe, STATUS_OK, Trials
@@ -45,6 +46,7 @@ def train(
         colsample_bytree=int(space["colsample_bytree"]),
         eval_metric=config.model.eval_metric,
         early_stopping_rounds=config.model.early_stopping_rounds,
+        device=config.model.device,
     )
 
     model.fit(
@@ -61,6 +63,10 @@ def train(
 
 
 def hypertune(objective, space):
+    """
+    Hyperparameter tuning
+    """
+
     trials = Trials()
     best_hyperparams = fmin(
         objective, space, algo=tpe.suggest, max_evals=100, trials=trials
@@ -92,3 +98,9 @@ def main(config: DictConfig):
     objective = partial(train, train_x, train_y, test_x, test_y, config)
 
     best_model = hypertune(objective, space)
+
+    joblib.dump(best_model, config.model.model_path)
+
+
+if __name__ == "__main__":
+    main()
