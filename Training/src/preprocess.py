@@ -5,6 +5,7 @@ import hydra
 from omegaconf import DictConfig
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
+from hydra.utils import to_absolute_path as abspath
 
 
 def get_data(path: str) -> pd.DataFrame:
@@ -84,29 +85,41 @@ def scale(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     Scale the columns
     """
 
+    columns = [col for col in columns if col in df.columns]
     df[columns] = StandardScaler().fit_transform(df[columns])
     return df
 
 
-@hydra.main(config_path="../config", config_name="config", version_base="1.1")
+def get_x_y(df: pd.DataFrame) -> tuple:
+    """
+    Get the x and y from the dataframe
+    """
+    x = df.drop("trip_duration", axis=1)
+    y = df["trip_duration"]
+    return x, y
+
+
+@hydra.main(config_path="../../config", config_name="main", version_base="1.1")
 def process_data(config: DictConfig):
-    data = get_data(config.data.path)
+    data = get_data(abspath(config.data.path))
 
     data = feature_addition(data)
-    data = onehot_categorical(data, config.data.onehot_categorical)
-    data = drop_columns(data, config.data.drop_columns)
+    data = onehot_categorical(data, config.features.onehot_categorical)
+    data = drop_columns(data, config.features.drop_columns)
     data = remove_zero_distance(data)
     data = remove_outliers(data)
-    data = scale(data, config.data.scale_columns)
+    data = scale(data, config.features.scale_columns)
+
+    x, y = get_x_y(data)
 
     train_x, test_x, train_y, test_y = train_test_split(
-        data, test_size=0.2, random_state=42
+        x, y, test_size=0.2, random_state=42
     )
 
-    train_x.to_csv(config.processed.train_x, index=False)
-    test_x.to_csv(config.processed.test_x, index=False)
-    train_y.to_csv(config.processed.train_y, index=False)
-    test_y.to_csv(config.processed.test_y, index=False)
+    train_x.to_csv(abspath(config.processed.train_x.path), index=False)
+    test_x.to_csv(abspath(config.processed.test_x.path), index=False)
+    train_y.to_csv(abspath(config.processed.train_y.path), index=False)
+    test_y.to_csv(abspath(config.processed.test_y.path), index=False)
 
 
 if __name__ == "__main__":
