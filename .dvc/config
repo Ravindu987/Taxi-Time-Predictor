@@ -1,0 +1,7 @@
+[core]
+    remote = origin
+['remote "origin2"']
+    url = https://dagshub.com/Ravindu987/Taxi_time_prediction.got
+['remote "origin"']
+    url = s3://dvc
+    endpointurl = https://dagshub.com/Ravindu987/Taxi_time_prediction.s3
