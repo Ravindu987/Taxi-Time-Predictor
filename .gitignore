@@ -1,3 +1,5 @@
 Data
 */logs.log
 *.pkl
+models
+outputs

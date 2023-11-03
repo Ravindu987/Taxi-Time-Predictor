@@ -1,3 +1,6 @@
+defaults:
+  - model: model.yaml
+
 data:
   path: Data/train.csv
 
@@ -15,7 +18,7 @@ features:
 
 
 processed:
-  dir: data/processed
+  dir: Data/processed
   train_x: 
     name: train_x.csv
     path: ${processed.dir}/${processed.train_x.name}
@@ -27,4 +30,4 @@ processed:
     path: ${processed.dir}/${processed.train_y.name}
   test_y:
     name: test_y.csv
-    path: ${processed.dir}/${processed.test_y.name}  
+    path: ${processed.dir}/${processed.test_y.name} 
