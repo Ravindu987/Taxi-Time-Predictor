@@ -31,3 +31,11 @@ processed:
   test_y:
     name: test_y.csv
     path: ${processed.dir}/${processed.test_y.name} 
+
+
+mlflow_tracking_uri:
+  https://dagshub.com/Ravindu987/Taxi_time_prediction.mlflow
+mlflow_USERNAME:
+  Ravindu987
+mlflow_PASSWORD:
+  57801e5becd1deb25a67f916bd7f61b91406a1c7

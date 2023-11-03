@@ -23,7 +23,7 @@ def load_model(config: DictConfig):
     """
     Load the model
     """
-    model = joblib.load(abspath(config.model.path))
+    model = joblib.load(abspath(config.model.model_path))
     return model
 
 
@@ -55,8 +55,8 @@ def log_parameters(model):
         mlflow.log_params({arg: value})
 
 
-@hydra.main(config_path="../config", config_name="config", version_base="1.1")
-def main(config: DictConfig):
+@hydra.main(config_path="../../config", config_name="main", version_base="1.1")
+def eval(config: DictConfig):
     mlflow.set_tracking_uri(config.mlflow_tracking_uri)
     os.environ["MLFLOW_TRACKING_USERNAME"] = config.mlflow_USERNAME
     os.environ["MLFLOW_TRACKING_PASSWORD"] = config.mlflow_PASSWORD
@@ -83,3 +83,7 @@ def main(config: DictConfig):
         print(f"MSE: {mse}")
         print(f"MAE: {mae}")
         print(f"R2: {r2}")
+
+
+if __name__ == "__main__":
+    eval()

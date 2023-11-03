@@ -75,7 +75,7 @@ def hypertune(objective: Callable, space: dict) -> xgb.XGBRegressor:
 
 
 @hydra.main(config_path="../../config", config_name="main", version_base="1.1")
-def main(config: DictConfig):
+def train_model(config: DictConfig):
     train_x, test_x, train_y, test_y = load_data(config)
 
     space = {
@@ -100,4 +100,4 @@ def main(config: DictConfig):
 
 
 if __name__ == "__main__":
-    main()
+    train_model()
