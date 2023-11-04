@@ -47,7 +47,7 @@ def drop_columns(df: pd.DataFrame, columns: list) -> pd.DataFrame:
     """
     Drop the columns from the dataframe
     """
-    df = df.drop(columns=columns, axis=1)
+    df = df.drop(columns=columns, axis=1, errors="ignore")
     return df
 
 
@@ -99,9 +99,10 @@ def get_x_y(df: pd.DataFrame) -> tuple:
     return x, y
 
 
-@hydra.main(config_path="../../config", config_name="main", version_base="1.1")
-def process_data(config: DictConfig):
-    data = get_data(abspath(config.data.path))
+def preprocess_data(data, config):
+    """
+    Preprocess the data
+    """
 
     data = feature_addition(data)
     data = onehot_categorical(data, config.features.onehot_categorical)
@@ -109,6 +110,15 @@ def process_data(config: DictConfig):
     data = remove_zero_distance(data)
     data = remove_outliers(data)
     data = scale(data, config.features.scale_columns)
+
+    return data
+
+
+@hydra.main(config_path="../../config", config_name="main", version_base="1.1")
+def process_data(config: DictConfig):
+    data = get_data(abspath(config.data.path))
+
+    data = preprocess_data(data, config)
 
     x, y = get_x_y(data)
 

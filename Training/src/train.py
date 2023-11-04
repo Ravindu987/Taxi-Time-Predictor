@@ -55,9 +55,12 @@ def train(
     model.fit(train_x, train_y, eval_set=[(test_x, test_y)])
 
     predictions = model.predict(test_x)
-    rmsle = mean_squared_log_error(test_y, predictions, squared=False)
+    if config.model.eval_metric == "rmse":
+        loss = mean_squared_error(test_y, predictions, squared=False)
+    elif config.model.eval_metric == "rmsle":
+        loss = mean_squared_log_error(test_y, predictions, squared=False)
 
-    return {"loss": rmsle, "status": STATUS_OK, "model": model}
+    return {"loss": loss, "status": STATUS_OK, "model": model}
 
 
 def hypertune(objective: Callable, space: dict, config: DictConfig) -> xgb.XGBRegressor:

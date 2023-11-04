@@ -79,19 +79,19 @@ def eval(config: DictConfig):
         mse = mean_squared_error(test_y, predictions)
         mae = mean_absolute_error(test_y, predictions)
         r2 = r2_score(test_y, predictions)
-        rmsle = mean_squared_log_error(test_y, predictions)
+        # msle = mean_squared_log_error(test_y, predictions)
 
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("mse", mse)
         mlflow.log_metric("mae", mae)
         mlflow.log_metric("r2", r2)
-        mlflow.log_metric("rmsle", rmsle)
+        # mlflow.log_metric("msle", msle)
 
         print(f"RMSE: {rmse}")
         print(f"MSE: {mse}")
         print(f"MAE: {mae}")
         print(f"R2: {r2}")
-        print(f"RMSLE: {rmsle}")
+        # print(f"MSLE: {msle}")
 
 
 if __name__ == "__main__":

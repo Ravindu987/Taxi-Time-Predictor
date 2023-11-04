@@ -3,6 +3,8 @@ defaults:
 
 data:
   path: Data/train.csv
+  test_path: Data/test.csv
+  result_path: Data/result.csv
 
 features:
   onehot_categorical:
