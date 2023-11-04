@@ -66,6 +66,7 @@ def eval(config: DictConfig):
         model = load_model(config)
         predictions = predict(model, test_x)
 
+        mlflow.log_param("max_evals", config.model.max_evals)
         log_features(test_x)
         log_parameters(model)
 

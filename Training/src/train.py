@@ -60,14 +60,18 @@ def train(
     return {"loss": rmse, "status": STATUS_OK, "model": model}
 
 
-def hypertune(objective: Callable, space: dict) -> xgb.XGBRegressor:
+def hypertune(objective: Callable, space: dict, config: DictConfig) -> xgb.XGBRegressor:
     """
     Hyperparameter tuning
     """
 
     trials = Trials()
     best_hyperparams = fmin(
-        objective, space, algo=tpe.suggest, max_evals=10, trials=trials
+        objective,
+        space,
+        algo=tpe.suggest,
+        max_evals=config.model.max_evals,
+        trials=trials,
     )
 
     best_model = trials.results[np.argmin([r["loss"] for r in trials.results])]["model"]
@@ -94,7 +98,7 @@ def train_model(config: DictConfig):
 
     objective = partial(train, train_x, train_y, test_x, test_y, config)
 
-    best_model = hypertune(objective, space)
+    best_model = hypertune(objective, space, config)
 
     joblib.dump(best_model, abspath(config.model.model_path))
 
