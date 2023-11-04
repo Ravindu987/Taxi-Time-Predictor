@@ -7,7 +7,12 @@ import pandas as pd
 from hydra.utils import to_absolute_path as abspath
 from omegaconf import DictConfig
 
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import (
+    mean_squared_error,
+    mean_absolute_error,
+    r2_score,
+    mean_squared_log_error,
+)
 
 
 def load_test_data(config: DictConfig):
@@ -74,16 +79,19 @@ def eval(config: DictConfig):
         mse = mean_squared_error(test_y, predictions)
         mae = mean_absolute_error(test_y, predictions)
         r2 = r2_score(test_y, predictions)
+        rmsle = mean_squared_log_error(test_y, predictions)
 
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("mse", mse)
         mlflow.log_metric("mae", mae)
         mlflow.log_metric("r2", r2)
+        mlflow.log_metric("rmsle", rmsle)
 
         print(f"RMSE: {rmse}")
         print(f"MSE: {mse}")
         print(f"MAE: {mae}")
         print(f"R2: {r2}")
+        print(f"RMSLE: {rmsle}")
 
 
 if __name__ == "__main__":

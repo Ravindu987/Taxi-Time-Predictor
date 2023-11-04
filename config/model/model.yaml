@@ -2,9 +2,9 @@ dir: models
 name: xgboost
 model_path: ${model.dir}/${model.name}.pkl
 use_label_encoder: False
-objective: "reg:squarederror"
+objective: "reg:squaredlogerror"
 early_stopping_rounds: 20
-eval_metric: rmse
+eval_metric: rmsle
 device: gpu
 tree_method: gpu_hist
 seed: 42

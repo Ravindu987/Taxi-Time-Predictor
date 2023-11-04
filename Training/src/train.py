@@ -7,7 +7,7 @@ import joblib
 from omegaconf import DictConfig
 from hyperopt import hp, fmin, tpe, STATUS_OK, Trials
 from hydra.utils import to_absolute_path as abspath
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, mean_squared_log_error
 
 from functools import partial
 from typing import Callable
@@ -55,9 +55,9 @@ def train(
     model.fit(train_x, train_y, eval_set=[(test_x, test_y)])
 
     predictions = model.predict(test_x)
-    rmse = mean_squared_error(test_y, predictions, squared=False)
+    rmsle = mean_squared_log_error(test_y, predictions, squared=False)
 
-    return {"loss": rmse, "status": STATUS_OK, "model": model}
+    return {"loss": rmsle, "status": STATUS_OK, "model": model}
 
 
 def hypertune(objective: Callable, space: dict, config: DictConfig) -> xgb.XGBRegressor:
