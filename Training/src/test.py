@@ -41,6 +41,7 @@ def predict(model, test_x: pd.DataFrame):
     Predict the test data
     """
     predictions = model.predict(test_x)
+    predictions = [max(0, x) for x in predictions]
     return predictions
 
 
@@ -63,10 +64,10 @@ def test(config: DictConfig):
     model = load_model(config)
     test_x = get_data(config)
     id = test_x["id"]
-    print(test_x.shape)
+
     test_x = preprocess_data(test_x, config)
     predictions = predict(model, test_x)
-    print(predictions.shape)
+
     write_to_csv(predictions, id, config.data.result_path)
 
 
