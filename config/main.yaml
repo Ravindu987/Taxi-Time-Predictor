@@ -17,6 +17,9 @@ features:
     - distance_latitude
     - distance_longitude
     - distance
+  onehot_encoded:
+    - store_and_fwd_flag_N
+    - store_and_fwd_flag_Y
 
 
 processed:

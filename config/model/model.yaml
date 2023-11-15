@@ -8,7 +8,7 @@ eval_metric: rmse
 device: gpu
 tree_method: gpu_hist
 seed: 42
-max_evals: 50
+max_evals: 10
 n_estimators:
   low: 100
   high: 1000
