@@ -12,7 +12,8 @@ def save_to_bentoml(config: DictConfig):
     Save the model to bentoml
     """
     model = joblib.load(abspath(config.model.model_path))
-    bentoml.picklable_model.save(config.model.name, model)
+    saved_model = bentoml.xgboost.save_model(config.model.name, model)
+    print(f"Model saved to {saved_model}")
 
 
 if __name__ == "__main__":
