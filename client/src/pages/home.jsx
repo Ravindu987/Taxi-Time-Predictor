@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TextField, Button, Container, Typography, Grid } from "@mui/material";
+import { TextField, Button, Container, Grid } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 
@@ -32,9 +32,6 @@ export function Home() {
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        <Typography variant="h4" gutterBottom color="primary">
-          Taxi Form
-        </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
