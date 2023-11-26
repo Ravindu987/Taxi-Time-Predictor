@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { TextField, Button, Container, Grid } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
+import getResult from "../api/services/getResult";
 
 export function Home() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,8 @@ export function Home() {
   });
 
   const handleChange = (e) => {
+    console.log("Pressed");
+
     const { name, value } = e.target;
 
     setFormData((prevState) => ({
@@ -24,14 +27,16 @@ export function Home() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData);
+    const result = await getResult(formData);
+    console.log(result);
   };
 
   return (
     <ThemeProvider theme={theme}>
-      <Container>
+      <Container style={{ textAlign: "center" }}>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -115,7 +120,13 @@ export function Home() {
               />
             </Grid>
           </Grid>
-          <Button type="submit" variant="contained" color="primary">
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={{ marginTop: "40px" }}
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </form>
