@@ -6,7 +6,11 @@ const theme = createTheme({
             main: "#b3b300",
         },
         secondary: {
-            main: "#3f51b5",
+            main: "#ffc61a",
+        },
+        background: {
+            default: "#d9d9d9",
+            paper: '#ffdf80', // your color
         },
     },
 });
