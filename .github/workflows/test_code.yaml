@@ -41,7 +41,8 @@ jobs:
 
       - name: Test BentoML API
         run: |
-          bash ./api/run_server.sh
+          cd api
+          bash ./run_server.sh
           sleep 10
           pytest api/tests
           kill -9 `lsof -i:3000 -t`
