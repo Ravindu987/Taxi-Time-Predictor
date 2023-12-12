@@ -1,0 +1,47 @@
+name: Test Code and App
+on: push
+
+jobs:
+  test_model:
+    name: Test processed code and model
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Environment Setup
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          cache: pip
+      
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Pull data
+        run: |
+          dvc remote modify origin endpointurl https://dagshub.com/Ravindu987/Taxi_time_prediction.s3
+          dvc remote modify origin --local access_key_id ${{ secrets.ACCESS_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.SECRET_KEY_ACESS }}
+          dvc pull -r origin models
+
+      - name: Save model to BentoML local
+        run: python api/save_model_to_bentoml.py
+
+      - name: Test BentoML API
+        run: |
+          ./api/run_server.sh
+          sleep 10
+          pytest api/tests
+          kill -9 `lsof -i:3000 -t`
