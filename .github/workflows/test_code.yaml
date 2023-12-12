@@ -44,5 +44,5 @@ jobs:
           cd api
           BENTOML_CONFIG="./bentoml_configuration.yaml" bentoml serve create_service.py &
           sleep 20
-          pytest api/tests
+          pytest tests
           kill -9 `lsof -i:3000 -t`
