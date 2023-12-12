@@ -42,7 +42,7 @@ jobs:
       - name: Test BentoML API
         run: |
           cd api
-          bash ./run_server.sh
+          BENTOML_CONFIG="./bentoml_configuration.yaml" bentoml serve create_service.py
           sleep 10
           pytest api/tests
           kill -9 `lsof -i:3000 -t`

@@ -1,6 +1,12 @@
+import os
 import sys
 
-sys.path.append("/media/ravindu/Ravindu/Projects/Taxi Time Predictor/Training/src")
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+relative_path = "../Training/src"
+absolute_path = os.path.join(script_dir, relative_path)
+sys.path.append(absolute_path)
+
 
 import bentoml
 import numpy as np
