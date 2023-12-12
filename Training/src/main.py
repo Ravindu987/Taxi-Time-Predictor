@@ -8,8 +8,8 @@ from omegaconf import DictConfig
 
 @hydra.main(config_path="../../config", config_name="main", version_base="1.1")
 def main(config: DictConfig):
-    print("Preprocessing data...")
-    process_data(config)
+    # print("Preprocessing data...")
+    # process_data(config)
     print("Training model...")
     train_model(config)
     print("Evaluating model...")
