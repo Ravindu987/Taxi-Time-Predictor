@@ -222,7 +222,7 @@ def preprocess_data(data, config):
     data = remove_zero_distance(data)
     data = remove_outliers(data)
     # data = scale(data, config.features.scale_columns)
-    data = cluster(data)
+    # data = cluster(data)
 
     return data
 

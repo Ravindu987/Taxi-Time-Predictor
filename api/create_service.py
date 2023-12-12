@@ -11,7 +11,12 @@ from omegaconf import DictConfig
 from hydra import initialize, compose
 from pydantic import BaseModel
 
-from preprocess import feature_addition, onehot_categorical, scale, drop_columns
+from preprocess import (
+    feature_addition,
+    onehot_categorical,
+    scale,
+    drop_columns,
+)
 
 with initialize(config_path="../config", version_base="1.1"):
     config = compose(config_name="main")
@@ -35,7 +40,7 @@ def preprocess_data(data: pd.DataFrame, config: DictConfig):
     data = feature_addition(data)
     data = onehot_categorical(data, config.features.onehot_categorical)
     data = drop_columns(data, config.features.drop_columns)
-    data = scale(data, config.features.scale_columns)
+    # data = scale(data, config.features.scale_columns)
 
     return data
 

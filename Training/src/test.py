@@ -5,7 +5,12 @@ import hydra
 from omegaconf import DictConfig
 from hydra.utils import to_absolute_path as abspath
 
-from preprocess import feature_addition, onehot_categorical, scale, drop_columns
+from preprocess import (
+    feature_addition,
+    onehot_categorical,
+    scale,
+    drop_columns,
+)
 
 
 def load_model(config: DictConfig):
@@ -31,7 +36,7 @@ def preprocess_data(data: pd.DataFrame, config: DictConfig):
     data = feature_addition(data)
     data = onehot_categorical(data, config.features.onehot_categorical)
     data = drop_columns(data, config.features.drop_columns)
-    data = scale(data, config.features.scale_columns)
+    # data = scale(data, config.features.scale_columns)
 
     return data
 
