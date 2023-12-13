@@ -1,0 +1,30 @@
+/* YourComponent.css */
+
+.container {
+    /* Set the position property to relative to enable positioning of pseudo-element */
+    position: relative;
+    /* Set the height of the container to cover the component */
+    height: 100vh; /* 100% of the viewport height */
+  }
+  
+  .container::before {
+    /* Create a pseudo-element for the background */
+    content: '';
+    /* Set the background image for the pseudo-element */
+    background-image: url('../../public/images/Background.jpg');
+    /* Set the background size to cover the entire container */
+    background-size: cover;
+    /* Set the background position to center */
+    background-position: center;
+    /* Set the position property to absolute to position the pseudo-element */
+    position: absolute;
+    /* Set the top, left, right, and bottom to 0 to cover the entire container */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* Set the opacity of the background image */
+    opacity: 0.1; /* Adjust the opacity value as needed */
+    /* You can also add other styling for the pseudo-element here */
+    z-index: -1; /* Ensure the pseudo-element is behind the content */
+  }

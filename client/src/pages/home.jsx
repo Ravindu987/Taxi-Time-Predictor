@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   TextField,
   Button,
-  Container,
   Grid,
   Card,
   CardContent,
@@ -11,6 +10,7 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme";
 import getResult from "../api/services/getResult";
+import "./home.css";
 
 export function Home() {
   const [formData, setFormData] = useState({
@@ -43,119 +43,123 @@ export function Home() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        justifyContent="center"
-        m={1}
-      >
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Vendor ID"
-            type="number"
-            name="vendor_id"
-            value={formData.vendor_id}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Pickup Datetime"
-            type="text"
-            name="pickup_datetime"
-            value={formData.pickup_datetime}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Passenger Count"
-            type="number"
-            name="passenger_count"
-            value={formData.passenger_count}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Pickup Longitude"
-            type="number"
-            name="pickup_longitude"
-            value={formData.pickup_longitude}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Pickup Latitude"
-            type="number"
-            name="pickup_latitude"
-            value={formData.pickup_latitude}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Dropoff Longitude"
-            type="number"
-            name="dropoff_longitude"
-            value={formData.dropoff_longitude}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Dropoff Latitude"
-            type="number"
-            name="dropoff_latitude"
-            value={formData.dropoff_latitude}
-            onChange={handleChange}
-          />
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            fullWidth
-            label="Store and Fwd Flag"
-            type="text"
-            name="store_and_fwd_flag"
-            value={formData.store_and_fwd_flag}
-            onChange={handleChange}
-          />
-        </Grid>
+    <div className="container">
+      <ThemeProvider theme={theme}>
         <Grid
-          item
-          xs={8}
           container
+          spacing={2}
+          alignItems="center"
           justifyContent="center"
-          style={{ marginTop: "20px", marginBottom: "20px" }}
+          paddingTop={3}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit}
-            style={{ width: "20%" }}
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Vendor ID"
+              type="number"
+              name="vendor_id"
+              value={formData.vendor_id}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Pickup Datetime"
+              type="text"
+              name="pickup_datetime"
+              value={formData.pickup_datetime}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Passenger Count"
+              type="number"
+              name="passenger_count"
+              value={formData.passenger_count}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Pickup Longitude"
+              type="number"
+              name="pickup_longitude"
+              value={formData.pickup_longitude}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Pickup Latitude"
+              type="number"
+              name="pickup_latitude"
+              value={formData.pickup_latitude}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Dropoff Longitude"
+              type="number"
+              name="dropoff_longitude"
+              value={formData.dropoff_longitude}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Dropoff Latitude"
+              type="number"
+              name="dropoff_latitude"
+              value={formData.dropoff_latitude}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              fullWidth
+              label="Store and Fwd Flag"
+              type="text"
+              name="store_and_fwd_flag"
+              value={formData.store_and_fwd_flag}
+              onChange={handleChange}
+            />
+          </Grid>
+          <Grid
+            item
+            xs={8}
+            container
+            justifyContent="center"
+            style={{ marginTop: "20px", marginBottom: "20px" }}
           >
-            Submit
-          </Button>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ width: "20%" }}
+            >
+              Submit
+            </Button>
+          </Grid>
+          <Grid item xs={8} md={6} style={{ marginBottom: "20px" }}>
+            <Card>
+              <CardContent style={{ padding: "20px", textAlign: "center" }}>
+                <Typography variant="body1">
+                  Predicted Time: {result}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-        <Grid item xs={8} md={6} style={{ marginBottom: "20px" }}>
-          <Card>
-            <CardContent style={{ padding: "20px", textAlign: "center" }}>
-              <Typography variant="body1">Predicted Time: {result}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+      </ThemeProvider>
+    </div>
   );
 }

@@ -12,6 +12,8 @@ from preprocess import (
     drop_columns,
 )
 
+import numpy as np
+
 
 def load_model(config: DictConfig):
     """
@@ -36,6 +38,8 @@ def preprocess_data(data: pd.DataFrame, config: DictConfig):
     data = feature_addition(data)
     data = onehot_categorical(data, config.features.onehot_categorical)
     data = drop_columns(data, config.features.drop_columns)
+
+    print(data.head())
     # data = scale(data, config.features.scale_columns)
 
     return data
@@ -46,7 +50,9 @@ def predict(model, test_x: pd.DataFrame):
     Predict the test data
     """
     predictions = model.predict(test_x)
-    predictions = [max(0, x) for x in predictions]
+    predictions = [max(0, int(x)) for x in predictions]
+
+    print("Mean", np.mean(predictions))
     return predictions
 
 
